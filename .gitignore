@@ -1,0 +1,7 @@
+__pycache__/
+*.py[cod]
+.venv/
+procureflow.db
+node_modules/
+.next/
+.env
