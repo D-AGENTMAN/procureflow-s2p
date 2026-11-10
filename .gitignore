@@ -5,3 +5,14 @@ procureflow.db
 node_modules/
 .next/
 .env
+
+# Environment files and sensitive backups
+.env.*
+**/.env
+**/.env.*
+*.backup
+**/*.backup
+
+# Local databases
+*.db
+**/*.db

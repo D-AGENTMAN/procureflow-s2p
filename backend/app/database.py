@@ -1,15 +1,45 @@
+import os
+from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import DeclarativeBase, sessionmaker
+load_dotenv()
 
-# SQLite keeps the first milestone easy to run locally.
-# We will move to PostgreSQL once the core workflow is working.
-DATABASE_URL = "sqlite:///./procureflow.db"
+# Use PostgreSQL when DATABASE_URL is provided.
+# Otherwise, use SQLite for local development.
+
+DATABASE_URL = os.getenv(
+    "DATABASE_URL",
+    "sqlite:///./procureflow.db"
+)
+
+# Configure PostgreSQL to use Psycopg 3.
+if DATABASE_URL.startswith("postgresql://"):
+    DATABASE_URL = DATABASE_URL.replace(
+        "postgresql://",
+        "postgresql+psycopg://",
+        1
+    )
+
+engine_options = {
+    "pool_pre_ping": True,
+}
+
+# SQLite-specific configuration.
+if DATABASE_URL.startswith("sqlite"):
+    engine_options["connect_args"] = {
+        "check_same_thread": False
+    }
 
 engine = create_engine(
     DATABASE_URL,
-    connect_args={"check_same_thread": False},
+    **engine_options
 )
-SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False)
+
+SessionLocal = sessionmaker(
+    bind=engine,
+    autoflush=False,
+    autocommit=False
+)
 
 
 class Base(DeclarativeBase):
