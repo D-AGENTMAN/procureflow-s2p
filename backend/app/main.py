@@ -19,7 +19,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:3000",
                    "http://localhost:3001",
-                   "http://procureflow-s2p.vercel.app",
+                   "https://procureflow-s2p.vercel.app",
 ],
     allow_credentials=True,
     allow_methods=["*"],
