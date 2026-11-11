@@ -24,3 +24,7 @@ class SourcingProjectRead(BaseModel):
     status: str
     description: str
     created_at: datetime
+
+
+class SourcingProjectUpdate(SourcingProjectCreate):
+    status: str = Field(min_length=2, max_length=30)
