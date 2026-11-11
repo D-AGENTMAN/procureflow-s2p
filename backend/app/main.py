@@ -17,10 +17,8 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000",
-                   "http://localhost:3001",
-                   "https://procureflow-s2p.vercel.app",
-],
+    allow_origins=["https://procureflow-s2p.vercel.app"],
+    allow_origin_regex=r"^http://localhost:[0-9]+$",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
